@@ -1,68 +1,22 @@
 
-//*************************************************************
-
-class Skin {
-
-  private final ArrayList<String> stageImages;
-
-  Skin(ArrayList images) {
-    this.stageImages = images;
-  }
-
-  public String getImage(int index) {
-    return this.stageImages.get(index);
-  }
-
-  public ArrayList<String> getImages() {
-    return this.stageImages;
-  }
-}
-//*************************************************************
-class Cartesian {
-  private float x, y;
-
-  Cartesian(float x, float y) {
-    this.x = x;
-    this.y = y;
-  }
-
-  public float getX() {
-    return this.x;
-  }
-
-  public float getY() {
-    return this.y;
-  }
-
-  public Cartesian setX(float x) {
-    this.x = x;
-    return this;
-  }
-
-  public Cartesian setY(float y) {
-    this.y = y;
-    return this;
-  }
-}
-//*************************************************************
 abstract class Element {
 
   private String DEFAULT_SKIN = "default";
   private Cartesian coordenate;
   private float locX, locY; //talvez colocar um objeto com isso
   private float velX = 0.0, velY = 0.0 ;//velocidade do objeto, parecido com passo, mas pode ser universál para vários objetos
-  private HashMap<String, Skin> skins; //<SkinName, Skin(List<stagesStrings>)>// lista de skins para o objeto
+  private ArrayList<Skin> skins; //<SkinName, Skin(List<stagesStrings>)>// lista de skins para o objeto
   private PImage stage;//estado do elemento
   private Skin currentSkin;//skin ativa
   private float elementWidth, elementHeight; //largura e altura do elemento//talvez deixar para a implementação definir um tamanho estático
   private float opacity=1; //opacidade
-  private static float step; //o passo que o elemento anda por vez
+  private float step; //o passo que o elemento anda por vez
 
   //constructors
-  Element(float positionX, float positionY, float step, HashMap<String, Skin> skins) {
-    this.skins = skins;//talvez receber skins por métodos implementados pelas classes filhas, assim fazendo ela mesmos separar de toda coleção de skins
+  Element(float positionX, float positionY) {
+    this.skins = getObjectSkin();//talvez receber skins por métodos implementados pelas classes filhas, assim fazendo ela mesmos separar de toda coleção de skins
 
-    this.currentSkin = this.skins.get(DEFAULT_SKIN);//PODE DAR NULLPOINTE
+    this.currentSkin = findSkin(this.skins, DEFAULT_SKIN);
     this.stage = loadImage(this.currentSkin.getImage(0));
 
     if (stage != null) {
@@ -76,11 +30,11 @@ abstract class Element {
     this.step = getStep();
   }
 
-  Element(float positionX, float positionY,float step, HashMap<String, Skin> skins, float velocityX, float velocity, ) {
-    this.skins = skins;
+  Element(float positionX, float positionY, float velocityX, float velocityY) {
+    this.skins = getObjectSkin();
 
-    String imagePath = this.skins.get(DEFAULT_SKIN).getImage(0);
-    this.stage = loadImage(imagePath);
+    this.currentSkin = findSkin(this.skins, DEFAULT_SKIN);
+    this.stage = loadImage(this.currentSkin.getImage(0));
 
     if (stage != null) {
       elementWidth = stage.width;
@@ -93,11 +47,12 @@ abstract class Element {
     this.coordenate = new Cartesian(positionX, positionY);
     this.velX = velocityX;    
     this.velY = velocityY;
-    this.step = step;
+    this.step = getStep();
   }
-  
+
   //A classe filha define o passo para o elemento
-  public float getStep(){
+  public float getStep() {
+    return 0.0;
   }
 
   public float getLocX() {
@@ -136,7 +91,16 @@ abstract class Element {
   public float getRightLoc() {
     return this.coordenate.getX() + this.elementWidth;
   }
+
+  //metodos de colisão das pontas
   //**********************************************************************************
+
+  public Element setLoc(float x, float y) {
+    this.setLocX(x);
+    this.setLocY(y);
+    return this;
+  }
+
   public Element setLocX(float locX) {
     this.coordenate.setX(locX);    
     return this;
@@ -163,18 +127,56 @@ abstract class Element {
   }  
 
   public Element setActiveSkin(String skinName) {
-    this.currentSkin = this.skins.get(skinName);//PODE DAR NULLPOINTER
+    this.currentSkin = findSkin(this.skins, skinName);
     this.stage = loadImage(this.currentSkin.getImage(0));
     return this;
   }
 
-  public Element setActiveStage(Int stage) {
+  public Element setActiveStage(int stage) {
     this.stage = loadImage(this.currentSkin.getImage(stage));//PODE DAR INDEX OUT OF BOUND EXCEPTION
     return this;
   }
 
-//criar metodos cde colisão, DONE
-//c variavel de opacidade, DONE
-//e ver maneira de adicionar skins e ou multiplos estados DONE
-//setar a skin atual no objeto
+  //Metodos de render
+  public void renderElement() {//considerar opacidade
+    image(this.stage, this.locX, this.locY);
+  }
+
+  public void moveX() {
+    this.locX = this.locX + this.step * this.velX;
+  }  
+
+  public void moveY() {
+    this.locY = this.locY + this.step * this.velY;
+  } 
+
+  public void moveXAndRender() {
+    moveX();
+    renderElement();
+  }  
+
+  public void moveYAndRender() {
+    moveY();
+    renderElement();
+  }  
+  //Metodos de renderização, de andar para X e ou Y, de andar e renderizar DONE
+  //criar metodos cde colisão, DONE
+  //c variavel de opacidade, DONE
+  //e ver maneira de adicionar skins e ou multiplos estados DONE
+  //setar a skin atual no objeto
+
+  //exportar para classe static
+  public Skin findSkin(ArrayList<Skin> skins, String skinToFind) {
+    for (Skin skin : skins) {
+      if (skinToFind.equals(skin.getSkinName())) {
+        return skin;
+      }
+    }
+    throw new IllegalArgumentException("Skin não encontrada!");
+  }
+  
+  //implementar na classe filha
+  public ArrayList<Skin> getObjectSkin(){
+   return null; 
+  }
 }

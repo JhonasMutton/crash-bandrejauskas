@@ -9,7 +9,7 @@ class Skin {
   }
 
   public String getImage(int index) {
-    return this.stageImages.get(index);
+    return Constants.SKINS_PATH.concat(this.stageImages.get(index));
   }
 
   public ArrayList<String> getImages() {

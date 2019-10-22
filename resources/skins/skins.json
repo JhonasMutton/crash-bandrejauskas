@@ -5,18 +5,9 @@
 		"objectType":"box",
 		"skins":[
 				{
-				"skinName":"crash",
+				"skinName":"default",
 				"stageImages":[
-						"stage1.png",
-						"stage2.png"
-					      ]
-	
-				},
-{
-				"skinName":"crash",
-				"stageImages":[
-						"stage1.png",
-						"stage2.png"
+						"stage1.png"
 					      ]
 	
 				}

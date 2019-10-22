@@ -132,7 +132,7 @@ abstract class Element {
   }
 
   public Element setActiveStage(int stage) {
-    this.stage = loadImage(this.currentSkin.getImage(stage));//PODE DAR INDEX OUT OF BOUND EXCEPTION
+    this.stage = loadImage(this.currentSkin.getImage(stage));
     return this;
   }
 

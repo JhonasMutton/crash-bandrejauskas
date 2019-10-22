@@ -2,10 +2,9 @@
 abstract class Element {
 
   private String DEFAULT_SKIN = "default";
-  private Cartesian coordenate;
-  private float locX, locY; //talvez colocar um objeto com isso
+  private Cartesian coordenate;//coodenates of element
   private float velX = 0.0, velY = 0.0 ;//velocidade do objeto, parecido com passo, mas pode ser universál para vários objetos
-  private ArrayList<Skin> skins; //<SkinName, Skin(List<stagesStrings>)>// lista de skins para o objeto
+  private ElementSkins skins; //<SkinName, Skin(List<stagesStrings>)>// lista de skins para o objeto
   private PImage stage;//estado do elemento
   private Skin currentSkin;//skin ativa
   private float elementWidth, elementHeight; //largura e altura do elemento//talvez deixar para a implementação definir um tamanho estático
@@ -13,8 +12,8 @@ abstract class Element {
   private float step; //o passo que o elemento anda por vez
 
   //constructors
-  Element(float positionX, float positionY) {
-    this.skins = getObjectSkin();//talvez receber skins por métodos implementados pelas classes filhas, assim fazendo ela mesmos separar de toda coleção de skins
+  Element(float positionX, float positionY, ArrayList<ElementSkins> elementSkins) {
+    this.skins = getObjectSkin(elementSkins, getObjectName());
 
     this.currentSkin = findSkin(this.skins, DEFAULT_SKIN);
     this.stage = loadImage(this.currentSkin.getImage(0));
@@ -30,31 +29,34 @@ abstract class Element {
     this.step = getStep();
   }
 
-  Element(float positionX, float positionY, float velocityX, float velocityY) {
-    this.skins = getObjectSkin();
+  Element(float positionX, float positionY, float velocityX, float velocityY, ArrayList<ElementSkins> elementSkins) {
+    this.skins = getObjectSkin(elementSkins, getObjectName());
 
     this.currentSkin = findSkin(this.skins, DEFAULT_SKIN);
     this.stage = loadImage(this.currentSkin.getImage(0));
 
-    if (stage != null) {
-      elementWidth = stage.width;
-      elementHeight = stage.height;
-    } else {
+    if (stage == null) {
       throw new IllegalArgumentException("Invalid imagem path.");
     }
 
-
+    this.elementWidth = getWidth();
+    this.elementHeight = getHeight();
     this.coordenate = new Cartesian(positionX, positionY);
     this.velX = velocityX;    
     this.velY = velocityY;
     this.step = getStep();
   }
 
-  //A classe filha define o passo para o elemento
-  public float getStep() {
-    return 0.0;
-  }
+  //abstract methods
+  public abstract String getObjectName();
 
+  public abstract float getStep();
+
+  public abstract int getWidth();
+
+  public abstract int getHeight();
+
+  //getters
   public float getLocX() {
     return this.coordenate.getX();
   }
@@ -75,7 +77,6 @@ abstract class Element {
     return this.opacity;
   }
   //Colision Methods
-  //**********************************************************************************
   public float getTopLoc() {
     return this.coordenate.getY();
   }
@@ -92,9 +93,7 @@ abstract class Element {
     return this.coordenate.getX() + this.elementWidth;
   }
 
-  //metodos de colisão das pontas
-  //**********************************************************************************
-
+  //setters
   public Element setLoc(float x, float y) {
     this.setLocX(x);
     this.setLocY(y);
@@ -137,17 +136,17 @@ abstract class Element {
     return this;
   }
 
-  //Metodos de render
+  //Utils methods
   public void renderElement() {//considerar opacidade
-    image(this.stage, this.locX, this.locY);
+    image(this.stage, this.coordenate.getX(), this.coordenate.getY());
   }
 
   public void moveX() {
-    this.locX = this.locX + this.step * this.velX;
+   this.coordenate.setX(this.coordenate.getX() + this.step * this.velX) ;
   }  
 
   public void moveY() {
-    this.locY = this.locY + this.step * this.velY;
+   this.coordenate.setY(this.coordenate.getY() + this.step * this.velY) ;
   } 
 
   public void moveXAndRender() {
@@ -159,24 +158,22 @@ abstract class Element {
     moveY();
     renderElement();
   }  
-  //Metodos de renderização, de andar para X e ou Y, de andar e renderizar DONE
-  //criar metodos cde colisão, DONE
-  //c variavel de opacidade, DONE
-  //e ver maneira de adicionar skins e ou multiplos estados DONE
-  //setar a skin atual no objeto
 
-  //exportar para classe static
-  public Skin findSkin(ArrayList<Skin> skins, String skinToFind) {
-    for (Skin skin : skins) {
+  public Skin findSkin(ElementSkins skins, String skinToFind) {
+    for (Skin skin : skins.getSkins()) {
       if (skinToFind.equals(skin.getSkinName())) {
         return skin;
       }
     }
     throw new IllegalArgumentException("Skin não encontrada!");
   }
-  
-  //implementar na classe filha
-  public ArrayList<Skin> getObjectSkin(){
-   return null; 
+
+  private ElementSkins getObjectSkin(ArrayList<ElementSkins> elementSkins, String objectType) {
+    for (ElementSkins skin : elementSkins) {
+      if (objectType.equals(skin.getObjectType())) {
+        return skin;
+      }
+    }
+    throw new IllegalArgumentException("Skin não encontrada!");
   }
 }

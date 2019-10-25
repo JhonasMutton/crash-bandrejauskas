@@ -1,4 +1,4 @@
- //<>//
+ //<>// //<>//
 float xPos; // Posicionamento do X
 float yPos; // Poscionamento do Y
 float velocidade;

@@ -1,13 +1,11 @@
 
-abstract class Element {
+abstract class Element extends GraphObject{
 
   private String DEFAULT_SKIN = "default";
-  private Cartesian coordenate;//coodenates of element
   private float velX = 0.0, velY = 0.0 ;//velocidade do objeto, parecido com passo, mas pode ser universál para vários objetos
   private ElementSkins skins; //<SkinName, Skin(List<stagesStrings>)>// lista de skins para o objeto
   private PImage stage;//estado do elemento
   private Skin currentSkin;//skin ativa
-  private float elementWidth, elementHeight; //largura e altura do elemento//talvez deixar para a implementação definir um tamanho estático
   private float opacity=1; //opacidade
   private float step; //o passo que o elemento anda por vez
 
@@ -19,13 +17,15 @@ abstract class Element {
     this.stage = loadImage(this.currentSkin.getImage(0));
 
     if (stage != null) {
-      elementWidth = stage.width;
-      elementHeight = stage.height;
+      super.elementWidth = stage.width;
+      super.elementHeight = stage.height;
     } else {
       throw new IllegalArgumentException("Invalid imagem path.");
     }
 
-    this.coordenate = new Cartesian(positionX, positionY);
+    super.elementWidth = getWidth();
+    super.elementHeight = getHeight();
+    super.coordenate = new Cartesian(positionX, positionY);
     this.step = getStep();
   }
 
@@ -39,9 +39,9 @@ abstract class Element {
       throw new IllegalArgumentException("Invalid imagem path.");
     }
 
-    this.elementWidth = getWidth();
-    this.elementHeight = getHeight();
-    this.coordenate = new Cartesian(positionX, positionY);
+    super.elementWidth = getWidth();
+    super.elementHeight = getHeight();
+    super.coordenate = new Cartesian(positionX, positionY);
     this.velX = velocityX;    
     this.velY = velocityY;
     this.step = getStep();
@@ -56,14 +56,6 @@ abstract class Element {
 
   public abstract int getHeight();
 
-  //getters
-  public float getLocX() {
-    return this.coordenate.getX();
-  }
-
-  public float getLocY() {
-    return this.coordenate.getY();
-  }
 
   public float getVelX() {
     return this.velX;
@@ -78,35 +70,25 @@ abstract class Element {
   }
   //Colision Methods
   public float getTopLoc() {
-    return this.coordenate.getY();
+    return super.coordenate.getY();
   }
 
   public float getBottomLoc() {
-    return this.coordenate.getY() - this.elementHeight;
+    return super.coordenate.getY() - super.elementHeight;
   }
 
   public float getLeftLoc() {
-    return this.coordenate.getX();
+    return super.coordenate.getX();
   }
 
-  public float getRightLoc() {
-    return this.coordenate.getX() + this.elementWidth;
+  public float getRigh() {
+    return super.coordenate.getX() + super.elementWidth;
   }
 
   //setters
   public Element setLoc(float x, float y) {
     this.setLocX(x);
-    this.setLocY(y);
-    return this;
-  }
-
-  public Element setLocX(float locX) {
-    this.coordenate.setX(locX);    
-    return this;
-  }
-
-  public Element setLocY(float locY) {
-    this.coordenate.setY(locY);    
+    this.setLocY(y);   
     return this;
   }
 
@@ -138,15 +120,15 @@ abstract class Element {
 
   //Utils methods
   public void renderElement() {//considerar opacidade
-    image(this.stage, this.coordenate.getX(), this.coordenate.getY());
+    image(this.stage, super.coordenate.getX(), super.coordenate.getY());
   }
 
   public void moveX() {
-   this.coordenate.setX(this.coordenate.getX() + this.step * this.velX) ;
+   super.coordenate.setX(super.coordenate.getX() + this.step * this.velX) ;
   }  
 
   public void moveY() {
-   this.coordenate.setY(this.coordenate.getY() + this.step * this.velY) ;
+   super.coordenate.setY(super.coordenate.getY() + this.step * this.velY) ;
   } 
 
   public void moveXAndRender() {

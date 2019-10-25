@@ -5,6 +5,6 @@ public static class Constants {
   public static String SKINS = "skins";
   public static String SKIN_NAME = "skinName";
   public static String STAGE_IMAGES = "stageImages";
-
+  public static String MAÇANGA = "maçanga";
   public static String SKINS_PATH = RESOURCES_PATH.concat("skins/");
 }

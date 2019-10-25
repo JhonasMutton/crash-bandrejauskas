@@ -1,4 +1,4 @@
-public  class Utils {
+public class Utils {
 
   public ArrayList<ElementSkins> loadJsonSkins(String path) {
     JSONObject json = loadJSONObject(Constants.RESOURCES_PATH.concat(path));

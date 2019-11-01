@@ -1,0 +1,3 @@
+enum GameStateEnum{
+ GAME_SCREEN, MAIN_MENU, DEAD_SCREEN
+}

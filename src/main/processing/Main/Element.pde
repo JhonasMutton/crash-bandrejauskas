@@ -1,5 +1,5 @@
 
-abstract class Element extends GraphObject{
+abstract class Element extends GraphObject {
 
   private String DEFAULT_SKIN = "default";
   private float velX = 0.0, velY = 0.0 ;//velocidade do objeto, parecido com passo, mas pode ser universál para vários objetos
@@ -85,6 +85,19 @@ abstract class Element extends GraphObject{
     return super.coordenate.getX() + super.elementWidth;
   }
 
+  public Cartesian getCenter() {
+    float cx = super.coordenate.getX() + this.getWidth()/2;
+    float cy = super.coordenate.getY() - this.getHeight()/2;
+    return new Cartesian(cx, cy);
+  }
+
+  public float getRadiusWidht() {
+    return this.getWidth()/2;
+  }
+
+  public float getRadiusHeight() {
+    return this.getHeight()/2;
+  }
   //setters
   public Element setLoc(float x, float y) {
     this.setLocX(x);
@@ -124,11 +137,11 @@ abstract class Element extends GraphObject{
   }
 
   public void moveX() {
-   super.coordenate.setX(super.coordenate.getX() + this.step * this.velX) ;
+    super.coordenate.setX(super.coordenate.getX() + this.step * this.velX) ;
   }  
 
   public void moveY() {
-   super.coordenate.setY(super.coordenate.getY() + this.step * this.velY) ;
+    super.coordenate.setY(super.coordenate.getY() + this.step * this.velY) ;
   } 
 
   public void moveXAndRender() {

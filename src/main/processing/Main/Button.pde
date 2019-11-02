@@ -25,6 +25,9 @@ public class Button extends GraphObject {
       fill(unselected.r, unselected.g, unselected.b);
     }
     rect(super.coordenate.getX(), super.coordenate.getY(),super.elementWidth, super.elementHeight);
-    text(text, super.coordenate.getX(), super.coordenate.getY());
-  }
+    //text(text, super.coordenate.getX(), super.coordenate.getY());
+    
+    Text text = new Text("Texto", new Cartesian(500, 500) , 70, FontEnum.DEFAULT, new RGB(0, 0,0), new RGB(255, 0, 0));
+    text.renderText();
+    }
 }

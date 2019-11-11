@@ -4,16 +4,18 @@ Game game;
 MainMenu mainMenu;
 DeadScreen deadScreen;
 void setup() {
+ // fullScreen();
+ frameRate(60);
   size(1920, 1080); // Tamanho da Tela
-  background(0);// Cor do BG
+   print("load image2 \n");
   game = new Game();
-  mainMenu =  new MainMenu();
+  mainMenu =  new MainMenu(new SoundFile(this, "Whitefish_Salad.mp3"));
   deadScreen =  new DeadScreen();
 }
 
 void draw() {
-  background(0);
   
+
   switch(state) {
   case MAIN_MENU:
     mainMenu.renderScreen();
@@ -34,3 +36,21 @@ void draw() {
 public void setState(Screen screen) {
   state = screen.getNextState();
 }
+
+  
+//import processing.sound.*;
+//SoundFile file;
+
+//void setup() {
+//  size(640, 360);
+//  background(255);
+    
+//  // Load a soundfile from the /data folder of the sketch and play it back
+//  file = new SoundFile(this,"Whitefish_Salad.mp3");
+//  file.play();
+  
+//}      
+
+//void draw() {
+  
+//}

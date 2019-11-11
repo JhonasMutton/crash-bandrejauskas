@@ -8,5 +8,7 @@ public static class Constants {
   public static String MACANGA = "maçanga";
   public static String SKINS_PATH = RESOURCES_PATH.concat("skins/");
   public static String FONTS_PATH = RESOURCES_PATH.concat("fonts/");
-
+  public static String BUTTONS_PATH = RESOURCES_PATH.concat("buttons/");
+  public static String MENU_PATH = RESOURCES_PATH.concat("mainMenu/");
+  public static String SOUNDS_PATH = RESOURCES_PATH.concat("sounds/");
 }

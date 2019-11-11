@@ -4,6 +4,7 @@ abstract class Element extends GraphObject {
   private String DEFAULT_SKIN = "default";
   private float velX = 0.0, velY = 0.0 ;//velocidade do objeto, parecido com passo, mas pode ser universál para vários objetos
   private ElementSkins skins; //<SkinName, Skin(List<stagesStrings>)>// lista de skins para o objeto
+  private ArrayList<PImage> loadedSkin;
   private PImage stage;//estado do elemento
   private Skin currentSkin;//skin ativa
   private float opacity=1; //opacidade
@@ -14,7 +15,8 @@ abstract class Element extends GraphObject {
     this.skins = getObjectSkin(elementSkins, getObjectName());
 
     this.currentSkin = findSkin(this.skins, DEFAULT_SKIN);
-    this.stage = loadImage(this.currentSkin.getImage(0));
+    loadSkin(this.currentSkin);
+    setActiveStage(0);
 
     if (stage != null) {
       super.elementWidth = stage.width;
@@ -33,7 +35,8 @@ abstract class Element extends GraphObject {
     this.skins = getObjectSkin(elementSkins, getObjectName());
 
     this.currentSkin = findSkin(this.skins, DEFAULT_SKIN);
-    this.stage = loadImage(this.currentSkin.getImage(0));
+    loadSkin(this.currentSkin);
+    setActiveStage(0);
 
     if (stage == null) {
       throw new IllegalArgumentException("Invalid imagem path.");
@@ -122,12 +125,13 @@ abstract class Element extends GraphObject {
 
   public Element setActiveSkin(String skinName) {
     this.currentSkin = findSkin(this.skins, skinName);
-    this.stage = loadImage(this.currentSkin.getImage(0));
+    loadSkin(this.currentSkin);
+    setActiveStage(0);
     return this;
   }
 
   public Element setActiveStage(int stage) {
-    this.stage = loadImage(this.currentSkin.getImage(stage));
+    this.stage = this.loadedSkin.get(stage);
     return this;
   }
 
@@ -170,5 +174,14 @@ abstract class Element extends GraphObject {
       }
     }
     throw new IllegalArgumentException("Skin não encontrada!");
+  }
+
+  private void loadSkin(Skin skin) {
+    ArrayList<String> skins = skin.getImages();
+    ArrayList<PImage> imagesLoaded = new ArrayList();
+    for (String img : skins) {
+      imagesLoaded.add(loadImage(img));
+    }
+    this.loadedSkin = imagesLoaded;
   }
 }

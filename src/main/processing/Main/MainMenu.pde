@@ -40,11 +40,9 @@ public class MainMenu extends Screen {
         goToGameScreen();
       }
     } else if (startButton.isOnTop(mouseX, mouseY)) {
-      print("top \n", mouseX, mouseY);
       startButton.state = MouseState.OVER;
     } else {
       startButton.state = MouseState.UNSELECTED; 
-      print("não top \n ");
     }
 
     startButton.renderButton();

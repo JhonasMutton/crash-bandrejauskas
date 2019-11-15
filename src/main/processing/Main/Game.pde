@@ -3,8 +3,11 @@ public class Game extends Screen {
   private boolean firstTime = true;
   private ScenarioBackground scenario;
   private ScenarioBackground scenario2;
+  
   @Override
-    public void renderScreen() { 
+    public void renderScreen() {
+    if(isRender()){  
+      
     super.nextGameState = GameStateEnum.GAME_SCREEN;
     background(200, 00, 200);
     if (firstTime) {
@@ -21,5 +24,6 @@ public class Game extends Screen {
     scenario2.moveXAndRender();
 
     //super.nextGameState =
+    }
   }
 }

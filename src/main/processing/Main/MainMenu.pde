@@ -26,26 +26,28 @@ public class MainMenu extends Screen {
 
   @Override
     public void renderScreen() {
-    super.nextGameState = GameStateEnum.MAIN_MENU;
-    if (firstTime) {
-      this.music.loop();
-      firstTime=false;
-    }
-    
-    image(this.logo, 0, 0);  
-    
-    if (mousePressed && (mouseButton == LEFT)) {//TODO-transformar numa função de verificação
-      if (startButton.isOnTop(mouseX, mouseY)) {
-        startButton.state = MouseState.SELECTED;
-        goToGameScreen();
+    if (isRender()) {
+      super.nextGameState = GameStateEnum.MAIN_MENU;
+      if (firstTime) {
+        this.music.loop();
+        firstTime=false;
       }
-    } else if (startButton.isOnTop(mouseX, mouseY)) {
-      startButton.state = MouseState.OVER;
-    } else {
-      startButton.state = MouseState.UNSELECTED; 
-    }
 
-    startButton.renderButton();
+      image(this.logo, 0, 0);  
+
+      if (mousePressed && (mouseButton == LEFT)) {//TODO-transformar numa função de verificação
+        if (startButton.isOnTop(mouseX, mouseY)) {
+          startButton.state = MouseState.SELECTED;
+          goToGameScreen();
+        }
+      } else if (startButton.isOnTop(mouseX, mouseY)) {
+        startButton.state = MouseState.OVER;
+      } else {
+        startButton.state = MouseState.UNSELECTED;
+      }
+
+      startButton.renderButton();
+    }
   }
 
   public void goToGameScreen() {

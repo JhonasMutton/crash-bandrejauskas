@@ -14,6 +14,29 @@ abstract class LoopElement extends Element {
     this.initialPosition = new Cartesian(positionX, positionY);
     this.limitPosition = limitPosition;
   }
-  
-  
+
+  @Override
+    public void moveX() {
+    print("movex");
+    float loc = super.getLocX() + super.step * super.velX;  
+
+    if (loc < this.limitPosition.x) {
+      super.setLoc(this.initialPosition.x, super.getLocY()) ;
+    } else {
+      super.setLoc(loc, super.getLocY()) ;
+    }
+  }  
+
+  @Override
+    public void moveY() {
+
+
+    float loc = super.getLocY() + super.step * super.velY;  
+
+    if (loc < this.limitPosition.y) {
+      super.setLoc( super.getLocX(), this.initialPosition.y) ;
+    } else {
+      super.setLoc( super.getLocX(), loc) ;
+    }
+  }
 }

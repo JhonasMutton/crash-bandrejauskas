@@ -1,16 +1,17 @@
-public class ScenarioBackground extends Element {
+public class ScenarioBackground extends LoopElement {
 
-  ScenarioBackground(float positionX, float positionY, ArrayList<ElementSkins> elementSkins) {
-    super( positionX, positionY, elementSkins);
+  ScenarioBackground(float positionX, float positionY, ArrayList<ElementSkins> elementSkins, Cartesian limitPosition) {
+    super( positionX, positionY, elementSkins, limitPosition);
   }
 
-  ScenarioBackground(float positionX, float positionY, float velocityX, float velocityY, ArrayList<ElementSkins> elementSkins) {
-    super(positionX, positionY, velocityX, velocityY, elementSkins);
+  ScenarioBackground(float positionX, float positionY, float velocityX, float velocityY, ArrayList<ElementSkins> elementSkins, Cartesian limitPosition) {
+    super( positionX, positionY, velocityX, velocityY, elementSkins, 
+      limitPosition);
   }
 
   @Override
     public String getObjectName() {
-    return "Scenario";
+    return "scenario";
   }
 
   @Override

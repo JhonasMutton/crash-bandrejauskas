@@ -101,6 +101,14 @@ abstract class Element extends GraphObject {
   public float getRadiusHeight() {
     return this.getHeight()/2;
   }
+
+  public float getLocX() {
+    return super.coordenate.getX();
+  }
+
+  public float getLocY() {
+    return super.coordenate.getY();
+  }
   //setters
   public Element setLoc(float x, float y) {
     this.setLocX(x);
@@ -180,7 +188,7 @@ abstract class Element extends GraphObject {
     ArrayList<String> skins = skin.getImages();
     ArrayList<PImage> imagesLoaded = new ArrayList();
     for (String img : skins) {
-      imagesLoaded.add(loadImage(img));
+      imagesLoaded.add(loadImage(Constants.SKINS_PATH+img));
     }
     this.loadedSkin = imagesLoaded;
   }

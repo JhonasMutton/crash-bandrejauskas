@@ -5,7 +5,6 @@ MainMenu mainMenu;
 DeadScreen deadScreen;
 void setup() {
  // fullScreen();
- frameRate(60);
   size(1920, 1080); // Tamanho da Tela
    print("load image2 \n");
   game = new Game();

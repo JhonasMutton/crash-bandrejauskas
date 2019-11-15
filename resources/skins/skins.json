@@ -13,7 +13,21 @@
 				}
 			]	
 
+	},
+	{
+		"objectType":"scenario",
+		"skins":[
+				{
+				"skinName":"default",
+				"stageImages":[
+						"stage1.png"
+					      ]
+	
+				}
+			]	
+
 	}
+
 
 ]
 

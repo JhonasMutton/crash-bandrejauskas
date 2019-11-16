@@ -4,9 +4,9 @@ public class ScenarioBackground extends LoopElement {
     super( positionX, positionY, elementSkins, limitPosition);
   }
 
-  ScenarioBackground(float positionX, float positionY, float velocityX, float velocityY, ArrayList<ElementSkins> elementSkins, Cartesian limitPosition) {
+  ScenarioBackground(float positionX, float positionY, float velocityX, float velocityY, ArrayList<ElementSkins> elementSkins, Cartesian limitPosition, String skinName) {
     super( positionX, positionY, velocityX, velocityY, elementSkins, 
-      limitPosition);
+      limitPosition, skinName);
   }
 
   @Override
@@ -16,7 +16,7 @@ public class ScenarioBackground extends LoopElement {
 
   @Override
     public float getStep() {
-    return 2.0;
+    return 1.0;
   }
 
   @Override

@@ -9,15 +9,14 @@ abstract class LoopElement extends Element {
     this.limitPosition = limitPosition;
   }
 
-  LoopElement(float positionX, float positionY, float velocityX, float velocityY, ArrayList<ElementSkins> elementSkins, Cartesian limitPosition) {
-    super(positionX, positionY, velocityX, velocityY, elementSkins);
+  LoopElement(float positionX, float positionY, float velocityX, float velocityY, ArrayList<ElementSkins> elementSkins, Cartesian limitPosition, String skinName) {
+    super(positionX, positionY, velocityX, velocityY, elementSkins, skinName);
     this.initialPosition = new Cartesian(positionX, positionY);
     this.limitPosition = limitPosition;
   }
 
   @Override
     public void moveX() {
-    print("movex");
     float loc = super.getLocX() + super.step * super.velX;  
 
     if (loc < this.limitPosition.x) {

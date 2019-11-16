@@ -4,8 +4,8 @@ class Box extends Element {
     super( positionX, positionY, elementSkins);
   }
 
-  Box(float positionX, float positionY, float velocityX, float velocityY, ArrayList<ElementSkins> elementSkins) {
-    super(positionX, positionY, velocityX, velocityY, elementSkins);
+  Box(float positionX, float positionY, float velocityX, float velocityY, ArrayList<ElementSkins> elementSkins,String skinName) {
+    super(positionX, positionY, velocityX, velocityY, elementSkins, skinName);
   }
 
   @Override

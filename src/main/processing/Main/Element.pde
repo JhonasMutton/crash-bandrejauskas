@@ -11,12 +11,10 @@ abstract class Element extends GraphObject {
   private float step; //o passo que o elemento anda por vez
 
   //constructors
-  Element(float positionX, float positionY, ArrayList<ElementSkins> elementSkins) {
+  Element(float positionX, float positionY, ArrayList<ElementSkins> elementSkins) {    
     this.skins = getObjectSkin(elementSkins, getObjectName());
 
-    this.currentSkin = findSkin(this.skins, DEFAULT_SKIN);
-    loadSkin(this.currentSkin);
-    setActiveStage(0);
+    findAndLoadSkin(DEFAULT_SKIN);
 
     if (stage != null) {
       super.elementWidth = stage.width;
@@ -31,12 +29,14 @@ abstract class Element extends GraphObject {
     this.step = getStep();
   }
 
-  Element(float positionX, float positionY, float velocityX, float velocityY, ArrayList<ElementSkins> elementSkins) {
+  Element(float positionX, float positionY, float velocityX, float velocityY, ArrayList<ElementSkins> elementSkins, String skinName) {
     this.skins = getObjectSkin(elementSkins, getObjectName());
 
-    this.currentSkin = findSkin(this.skins, DEFAULT_SKIN);
-    loadSkin(this.currentSkin);
-    setActiveStage(0);
+    if (skinName == null || skinName == "") {
+      skinName= DEFAULT_SKIN;
+    }
+    
+    findAndLoadSkin(skinName);
 
     if (stage == null) {
       throw new IllegalArgumentException("Invalid imagem path.");
@@ -188,8 +188,14 @@ abstract class Element extends GraphObject {
     ArrayList<String> skins = skin.getImages();
     ArrayList<PImage> imagesLoaded = new ArrayList();
     for (String img : skins) {
-      imagesLoaded.add(loadImage(Constants.SKINS_PATH+img));
+      imagesLoaded.add(loadImage(img));
     }
     this.loadedSkin = imagesLoaded;
+  }
+
+  private void findAndLoadSkin(String skinName) {
+    this.currentSkin = findSkin(this.skins, skinName);
+    loadSkin(this.currentSkin);
+    setActiveStage(0);
   }
 }

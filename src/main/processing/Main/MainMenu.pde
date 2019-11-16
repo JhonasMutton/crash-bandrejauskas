@@ -6,21 +6,15 @@ public class MainMenu extends Screen {
   PImage logo;
   SoundFile music;
   boolean firstTime;
-
+  PImage loading = loadImage(Constants.SCREENS_PATH + "/loading/loading.png");
 
   MainMenu(SoundFile music) {
     this.music = music;
 
     this.logo = loadImage(Constants.MENU_PATH + "initial-logo.png");
-    print("MainMenu");
-
-    print("MainMenu1");
     startButton = new Button( 300, 100, new Cartesian(810, 500), Constants.BUTTONS_PATH + "start-0.png", Constants.BUTTONS_PATH + "start-1.png", Constants.BUTTONS_PATH + "start-2.png");
-    print("MainMenu2");
     super.nextGameState = GameStateEnum.MAIN_MENU;
-    print("MainMenu3");
     firstTime = true;
-    //
   }
 
 
@@ -39,6 +33,7 @@ public class MainMenu extends Screen {
         if (startButton.isOnTop(mouseX, mouseY)) {
           startButton.state = MouseState.SELECTED;
           goToGameScreen();
+          return;
         }
       } else if (startButton.isOnTop(mouseX, mouseY)) {
         startButton.state = MouseState.OVER;
@@ -54,6 +49,7 @@ public class MainMenu extends Screen {
     super.nextGameState = GameStateEnum.GAME_SCREEN;
     this.music.stop();
     firstTime=true;
+    image(this.loading, 0, 0);
   }
 }
 

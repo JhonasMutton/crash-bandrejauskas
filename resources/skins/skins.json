@@ -18,9 +18,62 @@
 		"objectType":"scenario",
 		"skins":[
 				{
+				"skinName":"layer1",
+				"stageImages":[
+						"../../../../resources/screens/Principal/Bright/layer1.png"
+					      ]
+	
+				},
+	{
+				"skinName":"layer2",
+				"stageImages":[
+						"../../../../resources/screens/Principal/Bright/layer2.png"
+					      ]
+	
+				},	{
+				"skinName":"layer3",
+				"stageImages":[
+						"../../../../resources/screens/Principal/Bright/layer3.png"
+					      ]
+	
+				},	{
+				"skinName":"layer4",
+				"stageImages":[
+						"../../../../resources/screens/Principal/Bright/layer4.png"
+					      ]
+	
+				},	{
+				"skinName":"layer5",
+				"stageImages":[
+						"../../../../resources/screens/Principal/Bright/layer5.png"
+					      ]
+	
+				},	{
+				"skinName":"layer6",
+				"stageImages":[
+						"../../../../resources/screens/Principal/Bright/layer6.png"
+					      ]
+	
+				},	{
+				"skinName":"layer7",
+				"stageImages":[
+						"../../../../resources/screens/Principal/Bright/layer7.png"
+					      ]
+	
+				},
+				{
+				"skinName":"layer8",
+				"stageImages":[
+						"../../../../resources/screens/Principal/Bright/layer8.png"
+					      ]
+	
+				},
+				{
 				"skinName":"default",
 				"stageImages":[
-						"stage1.png"
+						"../../../../resources/screens/screen1.png",
+						"../../../../resources/screens/screen2.png",
+						"../../../../resources/screens/screen3.png"
 					      ]
 	
 				}

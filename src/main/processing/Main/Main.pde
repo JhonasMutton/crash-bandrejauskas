@@ -3,6 +3,7 @@ GameStateEnum state = GameStateEnum.MAIN_MENU;
 Game game;
 MainMenu mainMenu;
 DeadScreen deadScreen;
+
 void setup() {
  // fullScreen();
   size(1920, 1080); // Tamanho da Tela

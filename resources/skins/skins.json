@@ -14,6 +14,55 @@
 			]	
 
 	},
+	{	
+		"objectType":"countdown",
+		"skins":[
+				{
+				"skinName":"default",
+				"stageImages":[
+						"../../../../resources/screens/Principal/countdown/3.png",
+						"../../../../resources/screens/Principal/countdown/2.png",
+						"../../../../resources/screens/Principal/countdown/1.png",
+						"../../../../resources/screens/Principal/countdown/go.png"
+					      ]
+	
+				}
+			]	
+
+	},
+	{
+		"objectType":"personage",
+		"skins":[
+				{
+				"skinName":"default",
+				"stageImages":[
+						"../../../../resources/skins/correcorre/parado_corre1.png",
+						"../../../../resources/skins/correcorre/parado_corre2.png",
+						"../../../../resources/skins/correcorre/parado_corre3.png",
+						"../../../../resources/skins/correcorre/parado_corre4.png",
+						"../../../../resources/skins/correcorre/parado_corre5.png",
+						"../../../../resources/skins/correcorre/parado_corre6.png",
+						"../../../../resources/skins/correcorre/corre1.png",
+						"../../../../resources/skins/correcorre/corre2.png",
+						"../../../../resources/skins/correcorre/corre3.png",
+						"../../../../resources/skins/correcorre/corre4.png",
+						"../../../../resources/skins/correcorre/corre5.png",
+						"../../../../resources/skins/correcorre/corre6.png",
+						"../../../../resources/skins/correcorre/corre7.png",
+						"../../../../resources/skins/correcorre/corre8.png",
+						"../../../../resources/skins/correcorre/corre9.png",
+						"../../../../resources/skins/correcorre/corre10.png",
+						"../../../../resources/skins/correcorre/corre11.png",
+						"../../../../resources/skins/correcorre/corre12.png",
+						"../../../../resources/skins/correcorre/corre13.png",
+						"../../../../resources/skins/correcorre/corre14.png"
+
+					      ]
+	
+				}
+			]	
+
+	},
 	{
 		"objectType":"scenario",
 		"skins":[

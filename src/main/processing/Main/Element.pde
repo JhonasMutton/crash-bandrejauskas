@@ -16,13 +16,6 @@ abstract class Element extends GraphObject {
 
     findAndLoadSkin(DEFAULT_SKIN);
 
-    if (stage != null) {
-      super.elementWidth = stage.width;
-      super.elementHeight = stage.height;
-    } else {
-      throw new IllegalArgumentException("Invalid imagem path.");
-    }
-
     super.elementWidth = getWidth();
     super.elementHeight = getHeight();
     super.coordenate = new Cartesian(positionX, positionY);
@@ -35,7 +28,7 @@ abstract class Element extends GraphObject {
     if (skinName == null || skinName == "") {
       skinName= DEFAULT_SKIN;
     }
-    
+
     findAndLoadSkin(skinName);
 
     if (stage == null) {
@@ -58,7 +51,6 @@ abstract class Element extends GraphObject {
   public abstract int getWidth();
 
   public abstract int getHeight();
-
 
   public float getVelX() {
     return this.velX;
@@ -156,6 +148,20 @@ abstract class Element extends GraphObject {
     super.coordenate.setY(super.coordenate.getY() + this.step * this.velY) ;
   } 
 
+
+  public void moveXAndRender(boolean stopped) {
+    if (!stopped) {
+      moveX();
+    }
+    renderElement();
+  }  
+
+  public void moveYAndRender(boolean stopped) {
+  if (!stopped) {
+      moveY();
+    }
+    renderElement();
+  }   
   public void moveXAndRender() {
     moveX();
     renderElement();

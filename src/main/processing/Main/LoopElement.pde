@@ -28,8 +28,6 @@ abstract class LoopElement extends Element {
 
   @Override
     public void moveY() {
-
-
     float loc = super.getLocY() + super.step * super.velY;  
 
     if (loc < this.limitPosition.y) {

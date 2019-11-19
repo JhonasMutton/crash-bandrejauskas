@@ -1,34 +1,64 @@
+
 public class Game extends Screen {
 
   private boolean firstTime = true;
   private ScenarioBackground scenario;
   private ScenarioBackground scenario2;
   private ArrayList<ScenarioBackground> scenariosLoaded = new ArrayList();
+  private Personage personage;
+  private boolean stopped = true;
+  private boolean countDownActive = true;
+  private CountDown countDown;
+  int value = 0;
 
   @Override
     public void renderScreen() {
-    if (isRender()) {  
+    if (isRender()) {
+      if (key == 'p' && !this.countDownActive) {
+        this.stopped = true;
+      }
+
+      if (key == 'o' && !this.countDownActive) {
+        if (this.stopped) {         
+          this.countDown.countDownState = 0;
+          this.countDownActive = true;
+        }else{
+          this.stopped = false; 
+        }
+      }
 
       super.nextGameState = GameStateEnum.GAME_SCREEN;
       background(200, 00, 200);
       if (firstTime) {
-        this.loadBackground();
+        Utils utils =  new Utils();
+        ArrayList<ElementSkins> elementSkins =  utils.loadJsonSkins("skins/skins.json");
+        this.loadBackground(elementSkins);
+        this.loadPersonage(elementSkins);
+        this.loadCountDown(elementSkins);
         this.firstTime = false;
       }
       moveAndRenderScenario();
+      personage.moveAndRenderPersonage(stopped);
+      if (this.countDownActive) {
+        boolean result = countDown.countDown();
+        if (this.countDownActive && !result) {
+          this.stopped = false;
+        }
+        this.countDownActive = result;
+      }
+
+      print(this.countDownActive, "AQUI CARALHO! \n");
+      //this.stopped = this.countDownActive;//todo mudar para suportar o pause
     }
   }
 
   private void moveAndRenderScenario() {
     for (ScenarioBackground scenario : this.scenariosLoaded) {
-      scenario.moveXAndRender();
+      scenario.moveXAndRender(this.stopped);
     }
   }
 
-  private void loadBackground() {
-    Utils utils =  new Utils();
-    ArrayList<ElementSkins> elementSkins =  utils.loadJsonSkins("skins/skins.json");
-
+  private void loadBackground(ArrayList<ElementSkins> elementSkins) {
     this.scenariosLoaded.add(new ScenarioBackground(0, 0, -10, -3, elementSkins, new Cartesian(-1920, -1080), "layer1"));
     this.scenariosLoaded.add( new ScenarioBackground(1920, 0, -10, -3, elementSkins, new Cartesian(0, 0), "layer1"));
 
@@ -52,5 +82,29 @@ public class Game extends Screen {
 
     this.scenariosLoaded.add(new ScenarioBackground(0, 0, -15, -3, elementSkins, new Cartesian(-1920, -1080), "layer8"));
     this.scenariosLoaded.add(new ScenarioBackground(1920, 0, -15, -3, elementSkins, new Cartesian(0, 0), "layer8"));
+  }
+
+  private void loadPersonage(ArrayList<ElementSkins> elementSkins) {
+
+    //for (ElementSkins e : elementSkins) {
+    //        print("aqui1:" + e.getObjectType() + "\n");
+    //  if (e.getObjectType().equals("personage")) {
+    //    print("aqui1:");
+    //    for (Skin s : e.getSkins()) {
+    //       print("aqui2:", e.getObjectType(), "\n");
+    //      if (s.getSkinName().equals("default")) {  
+    //        for (String img : s.getImages()) {
+    //          print(img);
+    //        }
+    //      }
+    //    }
+    //  }
+    //}
+    this.personage = new Personage(100, 600, 0, 4, elementSkins, null);
+    this.personage.setActiveStage(0);
+  }
+
+  private void loadCountDown(ArrayList<ElementSkins> elementSkins) {
+    this.countDown = new CountDown(0, 0, 0, 0, elementSkins, null);
   }
 }

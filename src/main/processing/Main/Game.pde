@@ -14,19 +14,27 @@ public class Game extends Screen {
   @Override
     public void renderScreen() {
     if (isRender()) {
-      if (key == 'p' && !this.countDownActive) {
-        this.stopped = true;
-      }
 
-      if (key == 'o' && !this.countDownActive) {
-        if (this.stopped) {         
-          this.countDown.countDownState = 0;
-          this.countDownActive = true;
-        }else{
-          this.stopped = false; 
+      if (keyPressed) {
+        if (key == 'p' && !this.countDownActive) {
+          this.stopped = true;
+        }
+
+        if (key == 'o' && !this.countDownActive) {
+          if (this.stopped) {         
+            this.countDown.countDownState = 0;
+            this.countDownActive = true;
+          } else {
+            this.stopped = false;
+          }
+        }
+
+        if (key == 32 && !this.countDownActive && !this.stopped && !personage.isJumping) {
+          personage.isJumping = true;
+          personage.setPersonageStage(PersonageAnimationStage.JUMPING);
         }
       }
-
+      
       super.nextGameState = GameStateEnum.GAME_SCREEN;
       background(200, 00, 200);
       if (firstTime) {
@@ -47,7 +55,6 @@ public class Game extends Screen {
         this.countDownActive = result;
       }
 
-      print(this.countDownActive, "AQUI CARALHO! \n");
       //this.stopped = this.countDownActive;//todo mudar para suportar o pause
     }
   }
@@ -100,7 +107,7 @@ public class Game extends Screen {
     //    }
     //  }
     //}
-    this.personage = new Personage(100, 600, 0, 4, elementSkins, null);
+    this.personage = new Personage(100, 600, 0, -15, elementSkins, null);
     this.personage.setActiveStage(0);
   }
 

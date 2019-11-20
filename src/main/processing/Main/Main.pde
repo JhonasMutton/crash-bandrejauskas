@@ -5,12 +5,12 @@ MainMenu mainMenu;
 DeadScreen deadScreen;
 
 void setup() {
- // fullScreen();
-  size(1920, 1080); // Tamanho da Tela
+ fullScreen();
+ // size(1920, 1080); // Tamanho da Tela
    print("load image2 \n");
   game = new Game();
   background(255, 00, 00);
-  mainMenu =  new MainMenu(new SoundFile(this, "Whitefish_Salad.mp3"));
+  mainMenu =  new MainMenu(new SoundFile(this, "theme.mp3"));
   deadScreen =  new DeadScreen();
 }
 

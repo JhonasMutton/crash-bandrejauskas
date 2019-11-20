@@ -3,6 +3,7 @@ public class Personage extends Element {
   private PersonageAnimationStage personageStage = PersonageAnimationStage.INITIAL_SPRINT;
   private int lastSpriteChanged = millis();
   private int personageAnimationStatus= 0;
+  private boolean isJumping;
 
   Personage(float positionX, float positionY, ArrayList<ElementSkins> elementSkins) {
     super( positionX, positionY, elementSkins);
@@ -19,7 +20,7 @@ public class Personage extends Element {
 
   @Override
     public float getStep() {
-    return 2.0;
+    return 1.0;
   }
 
   @Override
@@ -41,10 +42,8 @@ public class Personage extends Element {
       case JUMPING:
         jumping();
         break;
-
       case CROUCHING:
         break;
-
       case INITIAL_SPRINT:
         initialSprint();
         break;
@@ -76,11 +75,20 @@ public class Personage extends Element {
   }
 
   private void jumping() {
-    if (isChangePersonageStatus() && personageAnimationStatus < 14) {
-      
+    if (this.getLocY() < 200) {
+      this.setVelY(this.getVelY() * -1);
+    } else if (this.getLocY() > 600) {
+      this.setVelY(this.getVelY() * -1);
+      this.personageStage = PersonageAnimationStage.INITIAL_SPRINT;
+      this.personageAnimationStatus = 0;
+      this.setLocY(600);
+      this.isJumping = false;
+
+      return;
     }
+    this.moveY();
   }
-  
+
   private void initialSprint() {
     // print(personageAnimationStatus, "\n");
     if (isChangePersonageStatus() && personageAnimationStatus < 6) {
@@ -92,8 +100,11 @@ public class Personage extends Element {
       personageStage = PersonageAnimationStage.RUNNING;
     }
   }
-}
 
+  private void setPersonageStage(PersonageAnimationStage stage) {
+    this.personageStage =  stage;
+  }
+}
 
 
 

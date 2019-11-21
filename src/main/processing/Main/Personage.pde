@@ -1,6 +1,6 @@
 public class Personage extends Element {
 
-  private PersonageAnimationStage personageStage = PersonageAnimationStage.INITIAL_SPRINT;
+  private PersonageAnimationStage personageStage = PersonageAnimationStage.RUNNING;
   private int lastSpriteChanged = millis();
   private int personageAnimationStatus= 0;
   private boolean isJumping;
@@ -25,12 +25,12 @@ public class Personage extends Element {
 
   @Override
     public int getWidth() {
-    return 175;
+    return 317;
   }
 
   @Override
     public int getHeight() {
-    return 200;
+    return 325;
   }
 
   private void moveAndRenderPersonage(boolean stopped) {
@@ -44,9 +44,6 @@ public class Personage extends Element {
         break;
       case CROUCHING:
         break;
-      case INITIAL_SPRINT:
-        initialSprint();
-        break;
       }
     }
     this.renderElement();
@@ -54,7 +51,7 @@ public class Personage extends Element {
 
   private boolean isChangePersonageStatus() {
     int time = millis();
-    boolean isRender = ((time-lastSpriteChanged) >= 100);
+    boolean isRender = ((time-lastSpriteChanged) >= 20);
 
     if (isRender) {
       lastSpriteChanged = time;
@@ -64,24 +61,25 @@ public class Personage extends Element {
 
   private void running() {
     // print(personageAnimationStatus, "\n");
-    if (isChangePersonageStatus() && personageAnimationStatus < 14) {
-      this.setActiveStage(personageAnimationStatus+6);
+    if (isChangePersonageStatus() && personageAnimationStatus < 20) {
+      this.setActiveStage(personageAnimationStatus);
+      this.personageAnimationStatus++;
+
     }
-    this.personageAnimationStatus++;
-    if (personageAnimationStatus == 14) {
+    if (personageAnimationStatus == 20) {
       this.personageAnimationStatus = 0;
       this.personageStage = PersonageAnimationStage.RUNNING;
     }
   }
 
   private void jumping() {
-    if (this.getLocY() < 200) {
+    if (this.getLocY() < 30) {
       this.setVelY(this.getVelY() * -1);
-    } else if (this.getLocY() > 600) {
+    } else if (this.getLocY() > 500) {
       this.setVelY(this.getVelY() * -1);
-      this.personageStage = PersonageAnimationStage.INITIAL_SPRINT;
+      this.personageStage = PersonageAnimationStage.RUNNING;
       this.personageAnimationStatus = 0;
-      this.setLocY(600);
+      this.setLocY(500);
       this.isJumping = false;
 
       return;
@@ -89,28 +87,12 @@ public class Personage extends Element {
     this.moveY();
   }
 
-  private void initialSprint() {
-    // print(personageAnimationStatus, "\n");
-    if (isChangePersonageStatus() && personageAnimationStatus < 6) {
-      this.setActiveStage(personageAnimationStatus);
-    }
-    personageAnimationStatus++;
-    if (personageAnimationStatus == 6) {
-      personageAnimationStatus = 8;
-      personageStage = PersonageAnimationStage.RUNNING;
-    }
-  }
-
   private void setPersonageStage(PersonageAnimationStage stage) {
     this.personageStage =  stage;
   }
 }
 
-
-
-
 public enum PersonageAnimationStage {
-  INITIAL_SPRINT, 
     JUMPING, 
     RUNNING, 
     CROUCHING

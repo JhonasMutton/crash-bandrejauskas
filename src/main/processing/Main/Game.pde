@@ -4,7 +4,8 @@ public class Game extends Screen {
   private boolean firstTime = true;
   private ScenarioBackground scenario;
   private ScenarioBackground scenario2;
-  private ArrayList<ScenarioBackground> scenariosLoaded = new ArrayList();
+  private ArrayList<ScenarioBackground> scenariosLoaded = new ArrayList(); 
+  private ArrayList<Box> boxes = new ArrayList();
   private Personage personage;
   private boolean stopped = true;
   private boolean countDownActive = true;
@@ -34,7 +35,7 @@ public class Game extends Screen {
           personage.setPersonageStage(PersonageAnimationStage.JUMPING);
         }
       }
-      
+
       super.nextGameState = GameStateEnum.GAME_SCREEN;
       background(200, 00, 200);
       if (firstTime) {
@@ -43,9 +44,11 @@ public class Game extends Screen {
         this.loadBackground(elementSkins);
         this.loadPersonage(elementSkins);
         this.loadCountDown(elementSkins);
+        this.loadBoxes(elementSkins);
         this.firstTime = false;
       }
       moveAndRenderScenario();
+      moveAndRenderBoxes();
       personage.moveAndRenderPersonage(stopped);
       if (this.countDownActive) {
         boolean result = countDown.countDown();
@@ -55,6 +58,7 @@ public class Game extends Screen {
         this.countDownActive = result;
       }
 
+      verifyCollision();
       //this.stopped = this.countDownActive;//todo mudar para suportar o pause
     }
   }
@@ -107,11 +111,29 @@ public class Game extends Screen {
     //    }
     //  }
     //}
-    this.personage = new Personage(100, 600, 0, -15, elementSkins, null);
+    this.personage = new Personage(100, 500, 0, -25, elementSkins, null);
     this.personage.setActiveStage(0);
   }
 
   private void loadCountDown(ArrayList<ElementSkins> elementSkins) {
     this.countDown = new CountDown(0, 0, 0, 0, elementSkins, null);
+  }
+
+  private void verifyCollision() {
+    for (Box box : this.boxes) {
+      if (Colision.isColliding(this.personage, box)) {
+        print("colidiu");
+        this.stopped = true;
+      }
+    }
+  }
+  private void moveAndRenderBoxes() {
+    for (Box box : this.boxes) {
+      box.moveXAndRender(this.stopped);
+    }
+  }
+
+  private void loadBoxes(ArrayList<ElementSkins> elementSkins) {
+    this.boxes.add(new Box(1921, 650, -15, -3, elementSkins, new Cartesian(-173, -100), "default"));
   }
 }

@@ -12,7 +12,7 @@ public class MainMenu extends Screen {
     super(elementSkins);
     this.main = main;
     this.logo = loadImage(Constants.MENU_PATH + "initial-logo.png");
-    startButton = new Button(main, 300, 100, new Cartesian(810, 500), Constants.BUTTONS_PATH + "start-0.png", Constants.BUTTONS_PATH + "start-1.png", Constants.BUTTONS_PATH + "start-2.png",Constants.SOUNDS_PATH + "/effects/buttons/click.mp3",Constants.SOUNDS_PATH + "effects/buttons/over.mp3" );
+    startButton = new Button(main, 300, 100, new Cartesian(810, 500), Constants.BUTTONS_PATH + "start-0.png", Constants.BUTTONS_PATH + "start-1.png", Constants.BUTTONS_PATH + "start-1.png",Constants.SOUNDS_PATH + "/effects/buttons/click.mp3",Constants.SOUNDS_PATH + "effects/buttons/over.mp3" );
     super.nextGameState = GameStateEnum.MAIN_MENU;
     // image(loading, 0, 0);
     firstTime = true;

@@ -111,7 +111,7 @@ public class Game extends Screen {
   }
 
   private void loadCountDown() {
-    this.countDown = new CountDown(0, 0, 0, 0, elementSkins, null);
+    this.countDown = new CountDown(main, 0, 0, 0, 0, elementSkins, null);
   }
 
   private void verifyCollision() {

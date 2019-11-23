@@ -25,7 +25,7 @@ public class DeadScreen extends Screen {
     public void renderScreen() {
     super.nextGameState = GameStateEnum.DEAD_SCREEN;
     if (active) {
-      delay(9000);
+      delay(800);
       this.effect.play();
       active = false;
     }

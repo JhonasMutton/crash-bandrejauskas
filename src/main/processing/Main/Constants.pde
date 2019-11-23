@@ -10,6 +10,7 @@ public static class Constants {
   public static String FONTS_PATH = RESOURCES_PATH.concat("fonts/");
   public static String BUTTONS_PATH = RESOURCES_PATH.concat("buttons/");
   public static String MENU_PATH = RESOURCES_PATH.concat("mainMenu/");
+  public static String DEAD_SCREEN_PATH = RESOURCES_PATH.concat("deadScreen/");
   public static String SOUNDS_PATH = RESOURCES_PATH.concat("sounds/");
   public static String SCREENS_PATH = RESOURCES_PATH.concat("screens/");
 

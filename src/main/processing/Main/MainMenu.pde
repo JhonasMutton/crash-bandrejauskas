@@ -12,17 +12,17 @@ public class MainMenu extends Screen {
     super(elementSkins);
     this.main = main;
     this.logo = loadImage(Constants.MENU_PATH + "initial-logo.png");
-    startButton = new Button( 300, 100, new Cartesian(810, 500), Constants.BUTTONS_PATH + "start-0.png", Constants.BUTTONS_PATH + "start-1.png", Constants.BUTTONS_PATH + "start-2.png");
+    startButton = new Button(main, 300, 100, new Cartesian(810, 500), Constants.BUTTONS_PATH + "start-0.png", Constants.BUTTONS_PATH + "start-1.png", Constants.BUTTONS_PATH + "start-2.png",Constants.SOUNDS_PATH + "/effects/buttons/click.mp3",Constants.SOUNDS_PATH + "effects/buttons/over.mp3" );
     super.nextGameState = GameStateEnum.MAIN_MENU;
-   // image(loading, 0, 0);
+    // image(loading, 0, 0);
     firstTime = true;
   }
 
 
   @Override
     public void renderScreen() {
-    if(firstTime){
-     this.music = new SoundFile(this.main,Constants.SOUNDS_PATH + "/music/theme.mp3");
+    if (firstTime) {
+      this.music = new SoundFile(this.main, Constants.SOUNDS_PATH + "/music/theme.mp3");
     }
     if (isRender()) {
       super.nextGameState = GameStateEnum.MAIN_MENU;
@@ -33,19 +33,12 @@ public class MainMenu extends Screen {
 
       image(this.logo, 0, 0);  
 
-      if (mousePressed && (mouseButton == LEFT)) {//TODO-transformar numa função de verificação
-        if (startButton.isOnTop(mouseX, mouseY)) {
-          startButton.state = MouseState.SELECTED;
-          goToGameScreen();
-          return;
-        }
-      } else if (startButton.isOnTop(mouseX, mouseY)) {
-        startButton.state = MouseState.OVER;
-      } else {
-        startButton.state = MouseState.UNSELECTED;
-      }
 
       startButton.renderButton();
+      if (startButton.isPressed()) {
+        goToGameScreen();
+        return;
+      }
     }
   }
 

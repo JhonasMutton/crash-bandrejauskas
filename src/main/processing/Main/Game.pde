@@ -10,8 +10,10 @@ public class Game extends Screen {
   private CountDown countDown;
   private int PERSONAGE_Y = 500;
   SoundFile music;
+  private ArrayList<SoundFile> deathSound = new ArrayList();
   int value = 0;
   Main main;
+  boolean activated = false;
   Game(Main main, ArrayList<ElementSkins> elementSkins) {
     super(elementSkins);
     this.main = main;
@@ -30,7 +32,10 @@ public class Game extends Screen {
         this.loadCountDown();
         this.loadBoxes();
         this.firstTime = false;
-        this.music = new SoundFile(this.main, Constants.SOUNDS_PATH + "/music/hogwild.mp3");
+        this.loadSounds();
+      } else if (activated) {
+        this.restart(); 
+        activated = false;
       }
       moveAndRenderScenario();
       moveAndRenderBoxes();
@@ -112,7 +117,10 @@ public class Game extends Screen {
   private void verifyCollision() {
     for (Box box : this.boxes) {
       if (Colision.isColliding(this.personage, box)) {
-        restart();
+        music.stop();
+        playDeathSound();
+        super.nextGameState = GameStateEnum.DEAD_SCREEN;
+        //restart();
         //this.firstTime=true;
         return;
       }
@@ -129,6 +137,15 @@ public class Game extends Screen {
       this.boxes.remove(box);
     }
     this.boxes.add(new Box(1921, 650, -15, -3, elementSkins, new Cartesian(-173, -100), "default"));
+  }
+
+  private void loadSounds() {
+    this.music = new SoundFile(this.main, Constants.SOUNDS_PATH + "/music/hogwild.mp3");
+    this.deathSound.add( new SoundFile(this.main, Constants.SOUNDS_PATH + "/effects/buttons/death1.wav"));
+    this.deathSound.add( new SoundFile(this.main, Constants.SOUNDS_PATH + "/effects/buttons/death2.mp3"));
+    this.deathSound.add( new SoundFile(this.main, Constants.SOUNDS_PATH + "/effects/buttons/death3.wav"));
+    this.deathSound.add( new SoundFile(this.main, Constants.SOUNDS_PATH + "/effects/buttons/death4.wav"));
+    this.deathSound.add( new SoundFile(this.main, Constants.SOUNDS_PATH + "/effects/buttons/death5.wav"));
   }
 
   private void capturePressedKeys() {
@@ -185,5 +202,22 @@ public class Game extends Screen {
     personage.setPersonageStage(PersonageAnimationStage.RUNNING);
     personage.setActiveStage(0);
     personage.setLocY(PERSONAGE_Y);
+  }
+
+  private void playDeathSound() {
+    float random = random(10);
+    print(random);
+    if (random >=0 && random <2) {
+      this.deathSound.get(0).play();
+    } else if (random >1 && random <4) {
+      this.deathSound.get(1).play();
+    } else if (random >3 && random <6) {
+      this.deathSound.get(2).play();
+    } else if (random >5 && random <8) {
+      this.deathSound.get(3).play();
+    } else if (random >7 && random <10) {
+      this.deathSound.get(4).play();
+    }
+   
   }
 }

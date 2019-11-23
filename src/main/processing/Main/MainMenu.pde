@@ -8,7 +8,8 @@ public class MainMenu extends Screen {
   boolean firstTime;
   PImage loading = loadImage(Constants.SCREENS_PATH + "/loading/loading.png");
   Main main;
-  MainMenu(Main main) {
+  MainMenu(Main main, ArrayList<ElementSkins> elementSkins) {
+    super(elementSkins);
     this.main = main;
     this.logo = loadImage(Constants.MENU_PATH + "initial-logo.png");
     startButton = new Button( 300, 100, new Cartesian(810, 500), Constants.BUTTONS_PATH + "start-0.png", Constants.BUTTONS_PATH + "start-1.png", Constants.BUTTONS_PATH + "start-2.png");

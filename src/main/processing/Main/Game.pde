@@ -10,39 +10,22 @@ public class Game extends Screen {
   private CountDown countDown;
   int value = 0;
 
+  Game(ArrayList<ElementSkins> elementSkins){
+    super(elementSkins);
+  }
+
   @Override
     public void renderScreen() {
+    super.nextGameState = GameStateEnum.GAME_SCREEN;
+
     if (isRender()) {
+      this.capturePressedKeys();
 
-      if (keyPressed) {
-        if (key == 'p' && !this.countDownActive) {
-          this.stopped = true;
-        }
-
-        if (key == 'o' && !this.countDownActive) {
-          if (this.stopped) {         
-            this.countDown.countDownState = 0;
-            this.countDownActive = true;
-          } else {
-            this.stopped = false;
-          }
-        }
-
-        if (key == 32 && !this.countDownActive && !this.stopped && !personage.isJumping) {
-          personage.isJumping = true;
-          personage.setPersonageStage(PersonageAnimationStage.JUMPING);
-        }
-      }
-
-      super.nextGameState = GameStateEnum.GAME_SCREEN;
-      background(200, 00, 200);
       if (firstTime) {
-        Utils utils =  new Utils();
-        ArrayList<ElementSkins> elementSkins =  utils.loadJsonSkins("skins/skins.json");
-        this.loadBackground(elementSkins);
-        this.loadPersonage(elementSkins);
-        this.loadCountDown(elementSkins);
-        this.loadBoxes(elementSkins);
+        this.loadBackground();
+        this.loadPersonage();
+        this.loadCountDown();
+        this.loadBoxes();
         this.firstTime = false;
       }
       moveAndRenderScenario();
@@ -67,7 +50,7 @@ public class Game extends Screen {
     }
   }
 
-  private void loadBackground(ArrayList<ElementSkins> elementSkins) {
+  private void loadBackground() {
     //for (ScenarioBackground box : this.scenariosLoaded) {
     //  this.scenariosLoaded.remove(box);
     //}
@@ -96,7 +79,7 @@ public class Game extends Screen {
     this.scenariosLoaded.add(new ScenarioBackground(1920, 0, -15, -3, elementSkins, new Cartesian(0, 0), "layer8"));
   }
 
-  private void loadPersonage(ArrayList<ElementSkins> elementSkins) {
+  private void loadPersonage() {
 
     //for (ElementSkins e : elementSkins) {
     //        print("aqui1:" + e.getObjectType() + "\n");
@@ -116,7 +99,7 @@ public class Game extends Screen {
     this.personage.setActiveStage(0);
   }
 
-  private void loadCountDown(ArrayList<ElementSkins> elementSkins) {
+  private void loadCountDown() {
     this.countDown = new CountDown(0, 0, 0, 0, elementSkins, null);
   }
 
@@ -136,10 +119,32 @@ public class Game extends Screen {
     }
   }
 
-  private void loadBoxes(ArrayList<ElementSkins> elementSkins) {
+  private void loadBoxes() {
     for (Box box : this.boxes) {
       this.boxes.remove(box);
     }
     this.boxes.add(new Box(1921, 650, -15, -3, elementSkins, new Cartesian(-173, -100), "default"));
+  }
+
+  private void capturePressedKeys() {
+    if (keyPressed) {
+      if (key == 'p' && !this.countDownActive) {
+        this.stopped = true;
+      }
+
+      if (key == 'o' && !this.countDownActive) {
+        if (this.stopped) {         
+          this.countDown.countDownState = 0;
+          this.countDownActive = true;
+        } else {
+          this.stopped = false;
+        }
+      }
+      
+      if (key == 32 && !this.countDownActive && !this.stopped && !personage.isJumping) {
+        personage.isJumping = true;
+        personage.setPersonageStage(PersonageAnimationStage.JUMPING);
+      }
+    }
   }
 }

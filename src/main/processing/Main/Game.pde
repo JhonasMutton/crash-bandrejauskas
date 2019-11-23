@@ -2,8 +2,6 @@
 public class Game extends Screen {
 
   private boolean firstTime = true;
-  private ScenarioBackground scenario;
-  private ScenarioBackground scenario2;
   private ArrayList<ScenarioBackground> scenariosLoaded = new ArrayList(); 
   private ArrayList<Box> boxes = new ArrayList();
   private Personage personage;
@@ -70,6 +68,9 @@ public class Game extends Screen {
   }
 
   private void loadBackground(ArrayList<ElementSkins> elementSkins) {
+    //for (ScenarioBackground box : this.scenariosLoaded) {
+    //  this.scenariosLoaded.remove(box);
+    //}
     this.scenariosLoaded.add(new ScenarioBackground(0, 0, -10, -3, elementSkins, new Cartesian(-1920, -1080), "layer1"));
     this.scenariosLoaded.add( new ScenarioBackground(1920, 0, -10, -3, elementSkins, new Cartesian(0, 0), "layer1"));
 
@@ -111,7 +112,7 @@ public class Game extends Screen {
     //    }
     //  }
     //}
-    this.personage = new Personage(100, 500, 0, -25, elementSkins, null);
+    this.personage = new Personage(100, 500, 0, -20, elementSkins, null);
     this.personage.setActiveStage(0);
   }
 
@@ -123,7 +124,9 @@ public class Game extends Screen {
     for (Box box : this.boxes) {
       if (Colision.isColliding(this.personage, box)) {
         print("colidiu");
-        this.stopped = true;
+        this.nextGameState = GameStateEnum.MAIN_MENU;
+        //this.firstTime=true;
+        return;
       }
     }
   }
@@ -134,6 +137,9 @@ public class Game extends Screen {
   }
 
   private void loadBoxes(ArrayList<ElementSkins> elementSkins) {
+    for (Box box : this.boxes) {
+      this.boxes.remove(box);
+    }
     this.boxes.add(new Box(1921, 650, -15, -3, elementSkins, new Cartesian(-173, -100), "default"));
   }
 }

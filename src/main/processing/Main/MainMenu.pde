@@ -7,19 +7,22 @@ public class MainMenu extends Screen {
   SoundFile music;
   boolean firstTime;
   PImage loading = loadImage(Constants.SCREENS_PATH + "/loading/loading.png");
-
-  MainMenu(SoundFile music) {
-    this.music = music;
-
+  Main main;
+  MainMenu(Main main) {
+    this.main = main;
     this.logo = loadImage(Constants.MENU_PATH + "initial-logo.png");
     startButton = new Button( 300, 100, new Cartesian(810, 500), Constants.BUTTONS_PATH + "start-0.png", Constants.BUTTONS_PATH + "start-1.png", Constants.BUTTONS_PATH + "start-2.png");
     super.nextGameState = GameStateEnum.MAIN_MENU;
+   // image(loading, 0, 0);
     firstTime = true;
   }
 
 
   @Override
     public void renderScreen() {
+    if(firstTime){
+     this.music = new SoundFile(this.main, "theme.mp3");
+    }
     if (isRender()) {
       super.nextGameState = GameStateEnum.MAIN_MENU;
       if (firstTime) {

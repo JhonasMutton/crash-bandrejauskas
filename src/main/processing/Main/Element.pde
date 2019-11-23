@@ -69,7 +69,7 @@ abstract class Element extends GraphObject {
   }
 
   public float getBottomLoc() {
-    return super.coordenate.getY() - super.elementHeight;
+    return super.coordenate.getY() + super.elementHeight;
   }
 
   public float getLeftLoc() {

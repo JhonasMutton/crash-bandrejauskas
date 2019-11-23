@@ -36,4 +36,8 @@ abstract class LoopElement extends Element {
       super.setLoc( super.getLocX(), loc) ;
     }
   }
+
+  public void backToInitialPosition() {
+    super.setLoc(this.initialPosition.x, this.initialPosition.y) ;
+  }
 }

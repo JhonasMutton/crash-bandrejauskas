@@ -8,10 +8,13 @@ public class Game extends Screen {
   private boolean stopped = true;
   private boolean countDownActive = true;
   private CountDown countDown;
+  private int PERSONAGE_Y = 500;
+  SoundFile music;
   int value = 0;
-
-  Game(ArrayList<ElementSkins> elementSkins){
+  Main main;
+  Game(Main main, ArrayList<ElementSkins> elementSkins) {
     super(elementSkins);
+    this.main = main;
   }
 
   @Override
@@ -27,6 +30,7 @@ public class Game extends Screen {
         this.loadCountDown();
         this.loadBoxes();
         this.firstTime = false;
+        this.music = new SoundFile(this.main, Constants.SOUNDS_PATH + "/music/hogwild.mp3");
       }
       moveAndRenderScenario();
       moveAndRenderBoxes();
@@ -35,6 +39,8 @@ public class Game extends Screen {
         boolean result = countDown.countDown();
         if (this.countDownActive && !result) {
           this.stopped = false;
+          this.music.loop();
+          countDown.resetCountDown();
         }
         this.countDownActive = result;
       }
@@ -95,7 +101,7 @@ public class Game extends Screen {
     //    }
     //  }
     //}
-    this.personage = new Personage(100, 500, 0, -20, elementSkins, null);
+    this.personage = new Personage(100, PERSONAGE_Y, 0, -20, elementSkins, null);
     this.personage.setActiveStage(0);
   }
 
@@ -106,8 +112,7 @@ public class Game extends Screen {
   private void verifyCollision() {
     for (Box box : this.boxes) {
       if (Colision.isColliding(this.personage, box)) {
-        print("colidiu");
-        this.nextGameState = GameStateEnum.MAIN_MENU;
+        restart();
         //this.firstTime=true;
         return;
       }
@@ -133,18 +138,52 @@ public class Game extends Screen {
       }
 
       if (key == 'o' && !this.countDownActive) {
-        if (this.stopped) {         
-          this.countDown.countDownState = 0;
-          this.countDownActive = true;
-        } else {
-          this.stopped = false;
-        }
+        goRun();
       }
-      
+
       if (key == 32 && !this.countDownActive && !this.stopped && !personage.isJumping) {
         personage.isJumping = true;
         personage.setPersonageStage(PersonageAnimationStage.JUMPING);
       }
     }
+  }
+
+  public void restart() {
+    resetPersonage();
+    goRun();
+    resetBoxes();
+    resetScenario();
+    this.music.stop();
+    countDownActive = true;
+    countDown.resetCountDown();
+    stopped = true;
+  }
+
+  public void goRun() {
+    if (this.stopped) {         
+      this.countDown.countDownState = 0;
+      this.countDownActive = true;
+    } else {
+      this.stopped = false;
+    }
+  }
+
+  public void resetBoxes() {
+    for (Box box : this.boxes) {
+      box.backToInitialPosition();
+    }
+  }
+
+  public void resetScenario() {
+    for (ScenarioBackground scenario : this.scenariosLoaded) {
+      scenario.backToInitialPosition();
+    }
+  }
+
+  private void resetPersonage() {
+    personage.isJumping = false;
+    personage.setPersonageStage(PersonageAnimationStage.RUNNING);
+    personage.setActiveStage(0);
+    personage.setLocY(PERSONAGE_Y);
   }
 }

@@ -1,4 +1,4 @@
- //<>// //<>//
+ //<>// //<>// //<>//
 GameStateEnum state = GameStateEnum.MAIN_MENU;
 Game game;
 MainMenu mainMenu;
@@ -6,12 +6,12 @@ DeadScreen deadScreen;
 Utils utils =  new Utils();
 ArrayList<ElementSkins> elementSkins;
 void setup() {
-// fullScreen();
- background(40);
+ fullScreen();
+ background(41,44,46);
  this.elementSkins = utils.loadJsonSkins("skins/skins.json");
- size(1920, 1080); // Tamanho da Tela
+ //size(1920, 1080); // Tamanho da Tela
    print("load image2 \n");
-  game = new Game(this.elementSkins);
+  game = new Game(this, this.elementSkins);
   mainMenu =  new MainMenu(this, this.elementSkins);
   deadScreen =  new DeadScreen(this.elementSkins);
   image(loadImage(Constants.SCREENS_PATH + "/loading/loading.png"),0,0);

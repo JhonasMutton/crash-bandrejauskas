@@ -22,7 +22,7 @@ public class MainMenu extends Screen {
   @Override
     public void renderScreen() {
     if(firstTime){
-     this.music = new SoundFile(this.main, "theme.mp3");
+     this.music = new SoundFile(this.main,Constants.SOUNDS_PATH + "/music/theme.mp3");
     }
     if (isRender()) {
       super.nextGameState = GameStateEnum.MAIN_MENU;

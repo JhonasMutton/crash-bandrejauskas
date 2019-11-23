@@ -1,6 +1,6 @@
 public class CountDown extends Element {
 
-  public int countDownState = 1;
+  public int countDownState = 0;
   private int lastCountDown = millis();
 
   CountDown(float positionX, float positionY, ArrayList<ElementSkins> elementSkins) {
@@ -56,5 +56,9 @@ public class CountDown extends Element {
       lastCountDown = time;
     }
     return isRender;
+  }
+  
+  public void resetCountDown(){
+     this.countDownState = 0;
   }
 }

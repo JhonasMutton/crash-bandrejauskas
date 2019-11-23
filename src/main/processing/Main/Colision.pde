@@ -6,7 +6,7 @@ public static class Colision {
 
     float dx = abs(center1.getX() - center2.getX()) - (el1.getRadiusWidht()-50+el2.getRadiusWidht());
     float dy = abs(center1.getY() - center2.getY()) - (el1.getRadiusHeight()+el2.getRadiusHeight());
-    print(center1.getY(), " ",center2.getY(), " ", el1.getRadiusHeight(), " ", el2.getRadiusHeight(), "\n" );
+   // print(center1.getY(), " ",center2.getY(), " ", el1.getRadiusHeight(), " ", el2.getRadiusHeight(), "\n" );
     
     ;
     if (dx < 0 && el1.getBottomLoc() > el2.getTopLoc()) {

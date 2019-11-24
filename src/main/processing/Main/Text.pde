@@ -4,10 +4,10 @@ public class Text extends GraphObject {
   private int fontSize;
   private PFont font;
   private String text;
-  private boolean selected;
   private RGB currentColor;
+  private int align = LEFT;
 
-  Text(String text, Cartesian coordenate, int fontSize, FontEnum font, RGB selected, RGB unselected) {
+  Text(String text, Cartesian coordenate, int fontSize, FontEnum font, RGB selected, RGB unselected, String align) {
     this.text = text;
     super.coordenate = coordenate;
     this.fontSize = fontSize;
@@ -15,10 +15,22 @@ public class Text extends GraphObject {
     this.selectedColor = selected;
     this.unselectedColor = unselected;
     this.currentColor = unselected;
+
+    switch(align) {
+    case "left":
+      this.align = LEFT;
+      break;
+    case "center":
+      this.align = CENTER;
+      break;
+    case "right":
+      this.align = RIGHT;
+      break;
+    }
+    
   }
 
   public void setSelected(boolean selected) {
-    this.selected = selected;
     if (selected) {
       this.currentColor = selectedColor;
     } else {
@@ -26,16 +38,20 @@ public class Text extends GraphObject {
     }
   }
 
+  public void setText(String text) {
+    this.text = text;
+  }
+
   public void renderText() {
     fill(currentColor.r, currentColor.g, currentColor.b);
-    textFont(font,fontSize);   
+    textFont(font, fontSize);   
     //textAlign();
-    
-  translate(width/2,height/2);  // Translate to the center//coloca a referencia central
-  //rotate(1);      
-  // Rotate by theta
-  
-  textAlign(CENTER);          //colocar alinhamento  
-  text(text,0,0);     
+
+    //translate(width/2, height/2);  // Translate to the center//coloca a referencia central
+    //rotate(1);      
+    // Rotate by theta
+
+    textAlign(this.align);          //colocar alinhamento  
+    text(text, super.coordenate.getX(), super.coordenate.getY());
   }
 }

@@ -9,9 +9,13 @@ public class Game extends Screen {
   private boolean countDownActive = true;
   private CountDown countDown;
   private int PERSONAGE_Y = 500;
-  SoundFile music;
+  private SoundFile music;
   private ArrayList<SoundFile> deathSound = new ArrayList();
-  int value = 0;
+
+  private float meters = 0;
+  private float velocityGeneral = 1.0;
+  private Text meterShowed;
+
   Main main;
   boolean activated = false;
   Game(Main main, ArrayList<ElementSkins> elementSkins) {
@@ -33,6 +37,7 @@ public class Game extends Screen {
         this.loadBoxes();
         this.firstTime = false;
         this.loadSounds();
+        this.loadTexts();
       } else if (activated) {
         this.restart(); 
         activated = false;
@@ -40,6 +45,9 @@ public class Game extends Screen {
       moveAndRenderScenario();
       moveAndRenderBoxes();
       personage.moveAndRenderPersonage(stopped);
+
+      meterShowed.setText("Score:" + meters);
+      meterShowed.renderText();
       if (this.countDownActive) {
         boolean result = countDown.countDown();
         if (this.countDownActive && !result) {
@@ -51,6 +59,10 @@ public class Game extends Screen {
       }
 
       verifyCollision();
+
+      if (!stopped) {
+        countMeters();
+      }
       //this.stopped = this.countDownActive;//todo mudar para suportar o pause
     }
   }
@@ -120,6 +132,10 @@ public class Game extends Screen {
         music.stop();
         playDeathSound();
         super.nextGameState = GameStateEnum.DEAD_SCREEN;
+        main.lastScore = meters;
+        if (meters > main.bestScore) {
+          main.bestScore = meters;
+        }
         //restart();
         //this.firstTime=true;
         return;
@@ -152,6 +168,7 @@ public class Game extends Screen {
     if (keyPressed) {
       if (key == 'p' && !this.countDownActive) {
         this.stopped = true;
+        this.music.pause();
       }
 
       if (key == 'o' && !this.countDownActive) {
@@ -174,6 +191,7 @@ public class Game extends Screen {
     countDownActive = true;
     countDown.resetCountDown();
     stopped = true;
+    meters = 0;
   }
 
   public void goRun() {
@@ -204,6 +222,10 @@ public class Game extends Screen {
     personage.setLocY(PERSONAGE_Y);
   }
 
+  private void loadTexts() {
+    this.meterShowed = new Text("0", new Cartesian(50, 90), 100, FontEnum.DEFAULT, new RGB(255, 255, 255), new RGB(255, 255, 255), "left");
+  }
+
   private void playDeathSound() {
     float random = random(10);
     print(random);
@@ -218,6 +240,9 @@ public class Game extends Screen {
     } else if (random >7 && random <10) {
       this.deathSound.get(4).play();
     }
-   
+  }
+
+  private void countMeters() {
+    this.meters = meters + 1 * velocityGeneral;
   }
 }

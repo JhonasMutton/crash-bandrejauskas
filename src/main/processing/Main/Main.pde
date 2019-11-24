@@ -5,6 +5,8 @@ MainMenu mainMenu;
 DeadScreen deadScreen;
 boolean restart = false;
 Utils utils =  new Utils();
+float lastScore;
+float bestScore;
 ArrayList<ElementSkins> elementSkins;
 void setup() {
   fullScreen();

@@ -67,7 +67,6 @@ public class Personage extends Element {
     }
     
     lastPersonageStage = PersonageAnimationStage.RUNNING;
-    // print(personageAnimationStatus, "\n");
     if (isChangePersonageStatus() && personageAnimationStatus < 20) {
       this.setActiveStage(personageAnimationStatus);
       this.personageAnimationStatus++;

@@ -55,11 +55,6 @@ public class Button extends GraphObject {
       image(unselected, super.getLocX(), super.getLocY());      
       break;
     }
-    //rect(super.coordenate.getX(), super.coordenate.getY(), super.elementWidth, super.elementHeight);
-    //text(text, super.coordenate.getX(), super.coordenate.getY());
-
-    //Text text = new Text("Texto", new Cartesian(500, 500), 70, FontEnum.DEFAULT, new RGB(0, 0, 0), new RGB(255, 0, 0));
-    //text.renderText();
   }
 
   public boolean isOnTop(int x, int y) {
@@ -79,7 +74,6 @@ public class Button extends GraphObject {
     } else {
       mouseUnselected();
     }
-   // this.renderButton();
     return false;
   }
 }

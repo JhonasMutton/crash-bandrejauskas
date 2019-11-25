@@ -34,7 +34,6 @@ public class DeadScreen extends Screen {
       active = false;
     }
     renderBg();
-    //image(this.background, 0, 0);
     restartButton.renderButton();
     renderScores();
     if (restartButton.isPressed()) {

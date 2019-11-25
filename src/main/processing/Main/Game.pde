@@ -103,21 +103,6 @@ public class Game extends Screen {
   }
 
   private void loadPersonage() {
-
-    //for (ElementSkins e : elementSkins) {
-    //        print("aqui1:" + e.getObjectType() + "\n");
-    //  if (e.getObjectType().equals("personage")) {
-    //    print("aqui1:");
-    //    for (Skin s : e.getSkins()) {
-    //       print("aqui2:", e.getObjectType(), "\n");
-    //      if (s.getSkinName().equals("default")) {  
-    //        for (String img : s.getImages()) {
-    //          print(img);
-    //        }
-    //      }
-    //    }
-    //  }
-    //}
     this.personage = new Personage(100, PERSONAGE_Y, 0, -20, elementSkins, null);
     this.personage.setActiveStage(0);
   }
@@ -228,7 +213,6 @@ public class Game extends Screen {
 
   private void playDeathSound() {
     float random = random(10);
-    print(random);
     if (random >=0 && random <2) {
       this.deathSound.get(0).play();
     } else if (random >1 && random <4) {

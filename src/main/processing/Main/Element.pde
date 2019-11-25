@@ -2,13 +2,13 @@
 abstract class Element extends GraphObject {
 
   private String DEFAULT_SKIN = "default";
-  private float velX = 0.0, velY = 0.0 ;//velocidade do objeto, parecido com passo, mas pode ser universál para vários objetos
-  private ElementSkins skins; //<SkinName, Skin(List<stagesStrings>)>// lista de skins para o objeto
+  private float velX = 0.0, velY = 0.0 ;
+  private ElementSkins skins; 
   private ArrayList<PImage> loadedSkin;
-  private PImage stage;//estado do elemento
-  private Skin currentSkin;//skin ativa
-  private float opacity=1; //opacidade
-  private float step; //o passo que o elemento anda por vez
+  private PImage stage;
+  private Skin currentSkin;
+  private float opacity=1; 
+  private float step; 
 
   //constructors
   Element(float positionX, float positionY, ArrayList<ElementSkins> elementSkins) {    

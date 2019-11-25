@@ -14,7 +14,6 @@ public class MainMenu extends Screen {
     this.logo = loadImage(Constants.MENU_PATH + "initial-logo.png");
     startButton = new Button(main, 300, 100, new Cartesian(810, 500), Constants.BUTTONS_PATH + "start-0.png", Constants.BUTTONS_PATH + "start-1.png", Constants.BUTTONS_PATH + "start-1.png",Constants.SOUNDS_PATH + "/effects/buttons/click.mp3",Constants.SOUNDS_PATH + "effects/buttons/over.mp3" );
     super.nextGameState = GameStateEnum.MAIN_MENU;
-    // image(loading, 0, 0);
     firstTime = true;
   }
 
@@ -33,7 +32,6 @@ public class MainMenu extends Screen {
 
       image(this.logo, 0, 0);  
 
-
       startButton.renderButton();
       if (startButton.isPressed()) {
         goToGameScreen();
@@ -49,13 +47,3 @@ public class MainMenu extends Screen {
     image(this.loading, 0, 0);
   }
 }
-
-
-
-//void setup() {
-//  size(640, 360);
-//  background(255);
-
-//  // Load a soundfile from the /data folder of the sketch and play it back
-//  file = new SoundFile(this, "Whitefish_Salad.mp3");
-//  file.play();

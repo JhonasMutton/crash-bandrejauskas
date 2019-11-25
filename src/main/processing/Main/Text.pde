@@ -45,13 +45,7 @@ public class Text extends GraphObject {
   public void renderText() {
     fill(currentColor.r, currentColor.g, currentColor.b);
     textFont(font, fontSize);   
-    //textAlign();
-
-    //translate(width/2, height/2);  // Translate to the center//coloca a referencia central
-    //rotate(1);      
-    // Rotate by theta
-
-    textAlign(this.align);          //colocar alinhamento  
+    textAlign(this.align);
     text(text, super.coordenate.getX(), super.coordenate.getY());
   }
 }
